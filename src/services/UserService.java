@@ -14,8 +14,7 @@ public class UserService{
         try {
             usersDao.save(user);
             return true;
-        }
-        catch (SQLException e){
+        } catch (SQLException e){
             return false;
         }
 
@@ -28,7 +27,6 @@ public class UserService{
 
     public Optional<User> findUserByUsername(String username){
         return usersDao.findByUsername(username);
-
     }
 
 

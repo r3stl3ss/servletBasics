@@ -19,19 +19,20 @@ public class UsersDaoImpl implements UsersDao {
        }
    }
 
+   //language=sql
     private final String SQL_SAVE_USER_TO_TABLE = "INSERT into users(username, email, password) values (?,?,?)";
+
     @Override
-    public void save(User model)throws SQLException {
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER_TO_TABLE, Statement.RETURN_GENERATED_KEYS)){
+    public void save (User model) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER_TO_TABLE, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1,model.getUsername());
             preparedStatement.setString(2,model.getEmail());
             preparedStatement.setString(3,model.getPassword());
             int updateRow = preparedStatement.executeUpdate();
-            if(updateRow == 0){
+            if (updateRow == 0){
                 throw new SQLException();
             }
             try (ResultSet set = preparedStatement.getGeneratedKeys();) {
-                //Если id  существет,обновляем его у подели.
                 if (set.next()) {
                     model.setId(set.getInt(1));
                 } else {
@@ -42,6 +43,7 @@ public class UsersDaoImpl implements UsersDao {
 
     }
 
+    //language=sql
     private final String SQL_UPDATE_USER = "UPDATE users";
     @Override
     public void update(User model) {
